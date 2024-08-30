@@ -31,6 +31,7 @@ async function run() {
     // console.log(productCollection)
 
     app.get("/products", async (req, res) => {
+      console.log("from pagination",req.query)
       const result = await productCollection.find().toArray();
       // console.log(result)
       res.send(result);
