@@ -71,3 +71,4 @@ app.listen(port, () => {
 });
 
 //62-5 (Interesting) Set current page state and next prev button
+//62-7 (Interesting) Load data based on the page number and size using chatGPT
