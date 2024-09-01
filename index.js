@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri =
   "mongodb+srv://emaJhonShop:ci7U2ESoR999OptV@cluster0.hfhifix.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 console.log(uri);
@@ -42,6 +42,21 @@ async function run() {
       // console.log(result)
       res.send(result);
     });
+
+    app.post("/productByIds",async(req,res)=>{
+      const ids = req.body
+      console.log(ids)
+      // const idsWithObjectId = ids.map((id)=>new Object(id))
+      const idsWithObjectId = ids.map((id)=>new ObjectId(id))
+      console.log(idsWithObjectId)
+      const query = {
+        _id : {
+          $in : idsWithObjectId
+        }
+      }
+      const result = await productCollection.find(query).toArray()
+      res.send(result)
+    })
 
     app.get("/productsCount", async (req, res) => {
       const count = await productCollection.estimatedDocumentCount();
